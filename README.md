@@ -13,19 +13,11 @@ This script is meant to prepare the data for analysis. It:
 * Do some descriptive statistics and plots
 * Import the genes data and integrate them with the brain features
 
-Input:
-    Individual files (global), gene expression files.
-Output:
-    Save two datasets and important figures
-
-"""
-#############################################################################################################
 ### Import modules/Libraries
 
 import pandas 
 import matplotlib.pylab as plt
 import seaborn
-#import scipy.stats as stats
 import glob
 
 ### Functions:
@@ -51,7 +43,7 @@ def calculate_diff(dataframe,column_name):
     after=" "+str(column_name)+"_"+"y"
     dataframe[str(column_name)]=abs(dataframe[before]-dataframe[after])
     return(dataframe)</code></pre>
-#############################################################################################################
+
 ### Combine the AD and Control subjects as followup/basline 
 
 <pre><code>case='awdataontheway/AD_FA_02_binary'
@@ -147,4 +139,55 @@ calculate_diff(dataframe=NEW2,column_name="louvain")
 calculate_diff(dataframe=NEW2,column_name="char_path_len")
 print(NEW2.columns)
 NEW2.to_csv("Local_Features_Differences_withMCI.csv")</code></pre>
+
+## Prepare GWAS files
+
+Get the PLINK binary files from ADNI and download them. Fill the information of all participants in the Local_Features_Differences_withMCI.csv file (use the last column in fam file to edit all the -9 to the absolute difference).
+
+## GWAS Analysis and Quality Control
+Use the followng .sh script.
+
+</pre></code>#define the files/folders
+SOFT=/X/X/SOFTWARES/
+OUT=/X/X/NORMAL/
+INPUT=/X/X/GWAS_final/
+SCRIPT=/X/X/plots/
+
+#QC
+${SOFT}plink --bfile ${INPUT}${i} --geno 0.01 --hwe 0.001 --maf 0.05 --make-bed --out ${OUT}${i}_snps
+grep -w -v 9 ${OUT}${i}_snps.fam | awk '{print $1 ,$2}' > ${OUT}${i}_file.txt
+${SOFT}plink --bfile ${OUT}${i}_snps --keep ${OUT}${i}_file.txt --make-bed --out ${OUT}${i}_ind
+${SOFT}plink2 --bfile ${OUT}${i}_ind --quantile-normalize --make-bed --out ${OUT}${i}_norm
+
+#GWAS
+${SOFT}plink --bfile ${OUT}${i}_norm --linear --out ${OUT}${i}_norm
+
+#now plot
+grep -w -v NA ${OUT}${i}_norm.assoc.linear > ${OUT}${i}_norm_plot.txt
+Rscript ${SCRIPT}qqplot.R ${OUT}${i}_norm_plot.txt PVAL ${OUT}${i}_norm gray29 9
+
+#now plot without QC
+${SOFT}plink2 --bfile ${INPUT}${i} --quantile-normalize --make-bed --out ${OUT}${i}_norm_dirty
+${SOFT}plink --bfile ${OUT}${i}_norm_dirty --linear --out ${OUT}${i}_norm_dirty
+grep -w -v NA ${OUT}${i}_norm_dirty.assoc.linear > ${OUT}${i}_norm_dirty_plot.txt
+Rscript ${SCRIPT}qqplot.R ${OUT}${i}_norm_dirty_plot.txt PVAL ${OUT}${i}_norm_dirty gray29 9</code></pre>
+
+
+## PASCAL Analysis
+
+Download the [PASCAL software](https://www2.unil.ch/cbg/index.php?title=Pascal), then run the followong shell scropt.
+
+</pre></code>module load java/jdk-11
+
+. /X/X/config.txt
+cd ${PASCAL_DIR}
+INPUT=${PASCAL_DIR}/
+
+echo running pascal for ${PASCAL_DIR}/resources/gwas/chr${j}_${i}.txt
+export PATH=$PATH:/X/X/PASCAL/lib/fortranlibs
+
+./Pascal --pval=${INPUT}resources/gwas/chr${j}_${i}.txt --chr=${j} --maxsnp=2000000 --runpathway=on --mafcutoff=0.00500 --genescoring=max
+echo Done Pascal for ${i} chr${j}</code></pre>
+
+
 
