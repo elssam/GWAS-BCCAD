@@ -14,7 +14,7 @@ the rest of the page shows the main scripts and program used for the bioinformat
 
 Please download the image features (global and local connectivity metrics) in the [Data folder](https://github.com/elssam/GWAS-BCCAD/tree/master/Data)
 
-## Feature Preparing
+## Feature Preparation
 
 This script is meant to prepare the data for analysis. It:
 * Import the individual files and get their global features,
