@@ -9,10 +9,11 @@ Tractography, connectome creation and feature extraction is given in the scripts
 
 the rest of the page shows the main scripts and program used for the bioinformatics analysis
 
-
+ [image]GWAS_pipelines2.png
+ 
 ## Download the Data Files
 
-Please download the image features (global and local connectivity metrics) in the [Data folder](https://github.com/elssam/GWAS-BCCAD/tree/master/Data)
+You can download the brain connectivity features (connectomes, global and local connectivity metrics) in the [Data folder](https://github.com/elssam/GWAS-BCCAD/tree/master/Data)
 
 ## Feature Preparation
 
