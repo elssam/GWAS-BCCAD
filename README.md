@@ -9,7 +9,7 @@ Tractography, connectome creation and feature extraction is given in the scripts
 
 the rest of the page shows the main scripts and program used for the bioinformatics analysis
 
- [image](https://github.com/elssam/GWAS-BCCAD/blob/master/GWAS_pipelines2.png)
+![image](https://github.com/elssam/GWAS-BCCAD/blob/master/GWAS_pipelines2.png)
  
 ## Download the Data Files
 
