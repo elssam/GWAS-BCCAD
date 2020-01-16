@@ -1,5 +1,13 @@
 # GWAS-BCCAD
 
+This repo comprises the code for the manuscript Elsheikh et al. Nature Scientific reports [paper](https://www.biorxiv.org/content/10.1101/342436v4), to be changed when the paper is online!
+
+This work uses data from the  Alzheimer's Disease Neuroimaging Initiative [publicly available](http://adni.loni.usc.edu/)  
+
+The image data are processed accoding to the pipeline reported in the script pre_process.sh
+Tractography, connectome creation and feature extraction is given in the scripts compute_conn_CSA.py, metrics.py and metrics.py
+
+the rest of the page shows the main scripts and program used for the bioinformatics analysis
 
 
 ## Download the Data Files
