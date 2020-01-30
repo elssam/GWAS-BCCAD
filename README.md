@@ -1,6 +1,8 @@
 # GWAS-BCCAD
 
-This repo comprises the code for the manuscript Elsheikh et al. Nature Scientific reports [paper](https://www.biorxiv.org/content/10.1101/342436v4) XXX
+This repo comprises the code for the manuscript Elsheikh et al. Nature Scientific reports 
+*"Genome-Wide Association Study of Brain Connectivity Changes for Alzheimer’s Disease". Sci Rep 10, 1433 (2020).* https://doi.org/10.1038/s41598-020-58291-1
+
 This work uses data from the  Alzheimer's Disease Neuroimaging Initiative [publicly available](http://adni.loni.usc.edu/)  
 
 The image data are processed accoding to the pipeline reported in the script pre_process.sh
@@ -52,7 +54,7 @@ def calculate_diff(dataframe,column_name):
     dataframe[str(column_name)]=abs(dataframe[before]-dataframe[after])
     return(dataframe)</code></pre>
 
-### Combine the AD and Control subjects as followup/basline 
+### Combine the Alzheimer's (AD) and Control subjects as followup/basline 
 
 <pre><code>case='awdataontheway/AD_FA_02_binary'
 control='awdataontheway/CONTROL_FA_02_binary'
